@@ -56,6 +56,14 @@ hs_err_pid*
 .idea/*.iml
 .idea/modules
 
+**/*.iml
+
+.gradle
+/build
+gradlew
+gradlew.bat
+/gradle
+
 # CMake
 cmake-build-*/
 
