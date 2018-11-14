@@ -5,6 +5,8 @@
 
 ## Installation
 
+This project uses the [Gradle Build Tool](https://gradle.org/). There is a `pom.xml` file, so you can use [Appache Maven](https://maven.apache.org/), if you're more comfortable with that or there's a restriction in your corporate firewall. 
+
 Mac/Linux (Bash): `./gradlew`
 
 Windows: `gradlew.bat`
