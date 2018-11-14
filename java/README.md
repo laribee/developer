@@ -1,7 +1,7 @@
 ## Prerequisites
 
-Java 1.8 update 181
-Your IDE of choice (must support JUnit 5)
+- Java 1.8 update 181
+- Your IDE of choice (must support JUnit 5)
 
 ## Installation
 
