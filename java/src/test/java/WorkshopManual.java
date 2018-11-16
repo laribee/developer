@@ -40,7 +40,7 @@ class WorkshopManual {
 
         class Dependent {
             void log(String message) throws InterruptedException {
-                // A long operation we might want to shortcut.
+                // A long operation we want to shortcut.
                 sleep(500000);
             }
 
@@ -88,11 +88,11 @@ class WorkshopManual {
 
             private String wuTangName;
 
-            public WuTangName(String value) {
+            WuTangName(String value) {
                 this.wuTangName = value;
             }
 
-            public String getTheName() {
+            String getTheName() {
                 return this.wuTangName;
             }
         }

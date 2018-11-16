@@ -218,4 +218,49 @@ class OrderTest {
         }
 
     }
+
+    @Nested
+    class BuyFourGetOneDiscount {
+
+        @Test
+        void five_items_of_same_sku_get_one_for_free() {
+
+            Order subject = new Order();
+
+            Product boombox = createBoomboxProduct();
+            boombox.setSku("BOOMBOX"); // Just so we know
+            boombox.setCost(100); // Keep it simple
+
+            for (int i = 0; i < 5; i++) {
+                subject.addItem(boombox);
+            }
+
+            assertEquals(400, subject.getTotal());
+        }
+
+        @Test
+        void voided_line_items_do_not_contribute_to_discount()
+        {
+            Order subject = new Order();
+
+            Product boombox = createBoomboxProduct();
+            boombox.setSku("BOOMBOX"); // Just so we know
+            boombox.setCost(100); // Keep it simple
+
+            for (int i = 0; i < 5; i++) {
+                subject.addItem(boombox);
+            }
+
+            subject.getLines().get(0).markVoid();
+
+            assertEquals(5, subject.getLines().size());
+            assertEquals(400, subject.getTotal());
+
+            subject.addItem(boombox);
+
+            assertEquals(6, subject.getLines().size());
+            assertEquals(400, subject.getTotal());
+        }
+
+    }
 }
