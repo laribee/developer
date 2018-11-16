@@ -17,4 +17,12 @@ public class Order {
     public List<OrderLine> getLines() {
         return lines;
     }
+
+    public double getTotal() {
+        double total = 0.0;
+        for (OrderLine line : lines) {
+            total += line.getCost();
+        }
+        return total;
+    }
 }

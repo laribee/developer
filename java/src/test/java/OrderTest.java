@@ -67,6 +67,49 @@ class OrderTest {
             assertFalse(product1.isValid());
             assertThrows(Product.InvalidProductException.class, () -> subject.addItem(product1));
         }
+    }
+
+    private Product createBoomboxProduct() {
+        return new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
+    }
+
+    @DisplayName("When calculating the order total,")
+    @Nested
+    class CalculatingTotal {
+
+        @Test
+        @DisplayName("a new order with no products has a total of zero.")
+        void new_order_has_zero_cost() {
+            assertEquals(0, new Order().getTotal());
+        }
+
+        @Test
+        @DisplayName("sum all order line costs.")
+        void sum_all_order_line_costs() throws Product.InvalidProductException {
+            Product p1 = createBoomboxProduct();
+            p1.setCost(129.99);
+
+            Order subject = new Order();
+            subject.addItem(p1);
+
+            assertEquals(129.99, subject.getTotal());
+
+            subject.addItem(p1);
+            assertEquals(259.98, subject.getTotal());
+        }
+
+        @Test
+        @DisplayName("negative prices are impossible.")
+        void negative_prices_are_impossible() {
+            Product p1 = createBoomboxProduct();
+            p1.setCost(-10);
+
+            // It's impossible because you can't add a product
+            // with negative total to an order, like, ever...
+
+            Order subject = new Order();
+            assertThrows(Product.InvalidProductException.class, () -> subject.addItem(p1));
+        }
 
     }
 
