@@ -6,9 +6,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Order")
 class OrderTest {
 
+    private Product createBoomboxProduct() {
+        return new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
+    }
+
     @Test
     @DisplayName("Has multiple items.")
-    void An_order_can_have_multiple_order_items() throws Product.InvalidProductException {
+    void An_order_can_have_multiple_order_items() {
 
         Product product1 = new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
         Product product2 = new Product("JUICERO", 400.00, "Make juice ta yer house!", Product.ProductType.Appliance);
@@ -27,14 +31,14 @@ class OrderTest {
         assertEquals(3, subject.getLines().size());
     }
 
-
     @DisplayName("When adding products,")
     @Nested
     class AddingItems {
 
+
         @Test
         @DisplayName("copy product data into the order item.")
-        void Copy_product_data_into_the_order_item() throws Product.InvalidProductException {
+        void Copy_product_data_into_the_order_item() {
             Product product1 = new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
 
             Order subject = new Order();
@@ -56,7 +60,6 @@ class OrderTest {
             assertEquals(Product.ProductType.Electronics, line.getProductType());
         }
 
-
         @Test
         @DisplayName("ensure the product is valid.")
         void Ensure_the_product_is_valid() {
@@ -67,10 +70,7 @@ class OrderTest {
             assertFalse(product1.isValid());
             assertThrows(Product.InvalidProductException.class, () -> subject.addItem(product1));
         }
-    }
 
-    private Product createBoomboxProduct() {
-        return new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
     }
 
     @DisplayName("When calculating the order total,")
@@ -85,7 +85,7 @@ class OrderTest {
 
         @Test
         @DisplayName("sum all order line costs.")
-        void sum_all_order_line_costs() throws Product.InvalidProductException {
+        void sum_all_order_line_costs() {
             Product p1 = createBoomboxProduct();
             p1.setCost(129.99);
 
@@ -113,4 +113,41 @@ class OrderTest {
 
     }
 
+    @DisplayName("When voiding an order,")
+    @Nested
+    class WhenVoiding {
+
+        @Test
+        @DisplayName("mark it as voided.")
+        void the_order_is_marked_void() {
+            Order subject = new Order();
+            subject.markVoid();
+            assertTrue(subject.isVoided());
+        }
+
+        @Test
+        @DisplayName("prevent new items from being added.")
+        void prevent_new_items_from_being_added() {
+            Order subject = new Order();
+            subject.markVoid();
+
+            assertThrows(Order.CannotAddItemsToVoidedOrder.class, () -> subject.addItem(createBoomboxProduct()));
+        }
+
+        @Test
+        @DisplayName("total is zero.")
+        void a_voided_order_has_a_zero_total() {
+            Order subject = new Order();
+
+            subject.addItem(createBoomboxProduct());
+            subject.addItem(createBoomboxProduct());
+            subject.addItem(createBoomboxProduct());
+
+            assertTrue(subject.getTotal() > 0);
+
+            subject.markVoid();
+
+            assertEquals(0, subject.getTotal());
+        }
+    }
 }

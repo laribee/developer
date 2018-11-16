@@ -9,7 +9,7 @@ public class Product {
     private double cost;
     private ProductType productType;
 
-    public static class InvalidProductException extends Exception { }
+    public static class InvalidProductException extends RuntimeException { }
 
     public enum ValidationError {
         MissingSku,
