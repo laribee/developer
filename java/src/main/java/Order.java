@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Order {
 
@@ -27,35 +25,21 @@ public class Order {
         return lines;
     }
 
-    public double getTotal() {
+    public double calculateTotal() {
+        return calculateTotal(new ArrayList<Discount>());
+    }
+
+    public double calculateTotal(List<Discount> discounts) {
         if (isVoided()) return 0;
 
         double subTotal = calculateSubTotal();
 
-        Map<String, Integer> skuMap = new HashMap<>();
-        Map<String, Double> costMap = new HashMap<>();
-
-        double discount = 0;
-
-        for(OrderLine line : lines) {
-            String sku = line.getSku();
-
-            if (line.isVoided()) continue;
-
-            if (!skuMap.containsKey(sku)) skuMap.put(sku, 0);
-            if (!costMap.containsKey(sku)) costMap.put(sku, line.getCost());
-
-            Integer currentCount = skuMap.get(sku);
-            skuMap.replace(sku, currentCount + 1);
+        double discountAmount = 0;
+        for (Discount discount : discounts) {
+            discountAmount += discount.calculate(lines);
         }
 
-        for (String sku : skuMap.keySet()) {
-            if (skuMap.get(sku) == 5) {
-                discount += costMap.get(sku);
-            }
-        }
-
-        return subTotal - discount;
+        return subTotal - discountAmount;
     }
 
     public void markVoid() {

@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Order")
@@ -80,7 +81,7 @@ class OrderTest {
         @Test
         @DisplayName("a new order with no products has a total of zero.")
         void new_order_has_zero_cost() {
-            assertEquals(0, new Order().getTotal());
+            assertEquals(0, new Order().calculateTotal());
         }
 
         @Test
@@ -92,10 +93,10 @@ class OrderTest {
             Order subject = new Order();
             subject.addItem(p1);
 
-            assertEquals(129.99, subject.getTotal());
+            assertEquals(129.99, subject.calculateTotal());
 
             subject.addItem(p1);
-            assertEquals(259.98, subject.getTotal());
+            assertEquals(259.98, subject.calculateTotal());
         }
 
         @Test
@@ -143,11 +144,11 @@ class OrderTest {
             subject.addItem(createBoomboxProduct());
             subject.addItem(createBoomboxProduct());
 
-            assertTrue(subject.getTotal() > 0);
+            assertTrue(subject.calculateTotal() > 0);
 
             subject.markVoid();
 
-            assertEquals(0, subject.getTotal());
+            assertEquals(0, subject.calculateTotal());
         }
 
         @Test
@@ -210,56 +211,66 @@ class OrderTest {
             OrderLine line = subject.addItem(createBoomboxProduct());
 
             line.markVoid();
-            assertEquals(0, subject.getTotal());
+            assertEquals(0, subject.calculateTotal());
 
             OrderLine newItem = subject.addItem(createBoomboxProduct());
 
-            assertTrue(subject.getTotal() > 0);
+            assertTrue(subject.calculateTotal() > 0);
         }
 
     }
 
     @Nested
-    class BuyFourGetOneDiscount {
+    @DisplayName("When discounting,")
+    class WhenDiscounting {
 
         @Test
-        void five_items_of_same_sku_get_one_for_free() {
-
+        @DisplayName("deduct discounted amount from the order.")
+        void apply_the_discount_amount() {
+            TestDiscount testDiscount = new TestDiscount(10);
             Order subject = new Order();
 
             Product boombox = createBoomboxProduct();
-            boombox.setSku("BOOMBOX"); // Just so we know
-            boombox.setCost(100); // Keep it simple
-
-            for (int i = 0; i < 5; i++) {
-                subject.addItem(boombox);
-            }
-
-            assertEquals(400, subject.getTotal());
-        }
-
-        @Test
-        void voided_line_items_do_not_contribute_to_discount()
-        {
-            Order subject = new Order();
-
-            Product boombox = createBoomboxProduct();
-            boombox.setSku("BOOMBOX"); // Just so we know
-            boombox.setCost(100); // Keep it simple
-
-            for (int i = 0; i < 5; i++) {
-                subject.addItem(boombox);
-            }
-
-            subject.getLines().get(0).markVoid();
-
-            assertEquals(5, subject.getLines().size());
-            assertEquals(400, subject.getTotal());
+            boombox.setCost(100);
 
             subject.addItem(boombox);
 
-            assertEquals(6, subject.getLines().size());
-            assertEquals(400, subject.getTotal());
+            ArrayList<Discount> discounts = new ArrayList<>();
+            discounts.add(testDiscount);
+
+            assertEquals(90, subject.calculateTotal(discounts));
+        }
+
+        @Test
+        void apply_multiple_discounts() {
+            TestDiscount testDiscount1 = new TestDiscount(3.22);
+            TestDiscount testDiscount2 = new TestDiscount(6.22);
+
+            Order subject = new Order();
+
+            Product boombox = createBoomboxProduct();
+            boombox.setCost(100.00);
+
+            subject.addItem(boombox);
+
+            ArrayList<Discount> discounts = new ArrayList<>();
+            discounts.add(testDiscount1);
+            discounts.add(testDiscount2);
+
+            assertEquals(90.56, subject.calculateTotal(discounts));
+        }
+        class TestDiscount implements Discount {
+
+            double amount;
+
+            TestDiscount(double amount) {
+                this.amount = amount;
+            }
+
+            @Override
+            public double calculate(ArrayList<OrderLine> lines) {
+                return amount;
+            }
         }
 
     }
