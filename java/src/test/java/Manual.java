@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-@DisplayName("Common Features")
-class ExampleTest {
+@DisplayName("Workshop Manual")
+class WorkshopManual {
 
     @Nested
-    @DisplayName("Common assertions.")
-    class Assertions {
+    @DisplayName("01. Common Assertions")
+    class CommonAssertions {
 
         @Test
         void equality() {
@@ -35,13 +35,13 @@ class ExampleTest {
     }
 
     @Nested
-    @DisplayName("Isolation with test doubles and Mockito.")
-    class Isolation {
+    @DisplayName("02. Test Doubles")
+    class TestDoubles {
 
         class Dependent {
             void log(String message) throws InterruptedException {
                 // A long operation we might want to shortcut.
-                sleep(5000);
+                sleep(500000);
             }
 
             boolean isValid() {
@@ -53,15 +53,16 @@ class ExampleTest {
             }
         }
 
-        class SubjectUnderTest {
+        class Controller {
             private Dependent dependent;
 
-            SubjectUnderTest(Dependent dependent) {
+            Controller(Dependent dependent) {
 
                 this.dependent = dependent;
             }
 
             void conditionalPath() {
+
 
                 if (this.dependent.isValid()) {
                     try {
@@ -102,7 +103,7 @@ class ExampleTest {
             Dependent doubleDependent = mock(Dependent.class);
             when(doubleDependent.isValid()).thenReturn(false); // Stub this method
 
-            SubjectUnderTest subject = new SubjectUnderTest(doubleDependent);
+            Controller subject = new Controller(doubleDependent);
 
             subject.conditionalPath();
 
@@ -119,7 +120,7 @@ class ExampleTest {
             Dependent doubleDependent = mock(Dependent.class);
             ArgumentCaptor<WuTangName> captor = ArgumentCaptor.forClass(WuTangName.class);
 
-            SubjectUnderTest subject = new SubjectUnderTest(doubleDependent);
+            Controller subject = new Controller(doubleDependent);
 
             subject.generateName("Dave"); // Notice we're passing in a regular string
 
