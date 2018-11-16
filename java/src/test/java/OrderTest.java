@@ -11,8 +11,8 @@ class OrderTest {
     }
 
     @Test
-    @DisplayName("Has multiple items.")
-    void An_order_can_have_multiple_order_items() {
+    @DisplayName("Have multiple line items.")
+    void have_multiple_line_items() {
 
         Product product1 = new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
         Product product2 = new Product("JUICERO", 400.00, "Make juice ta yer house!", Product.ProductType.Appliance);
@@ -38,7 +38,7 @@ class OrderTest {
 
         @Test
         @DisplayName("copy product data into the order item.")
-        void Copy_product_data_into_the_order_item() {
+        void Copy_product_data_into_the_order_line() {
             Product product1 = new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
 
             Order subject = new Order();
@@ -149,5 +149,73 @@ class OrderTest {
 
             assertEquals(0, subject.getTotal());
         }
+
+        @Test
+        @DisplayName("mark all line items as voided.")
+        void mark_all_line_items_as_voided() {
+            Order subject = new Order();
+
+            subject.addItem(createBoomboxProduct());
+            subject.addItem(createBoomboxProduct());
+
+            for(OrderLine line : subject.getLines()) {
+                assertFalse(line.isVoided());
+            }
+
+            subject.markVoid();
+
+            for(OrderLine line : subject.getLines()) {
+                assertTrue(line.isVoided());
+            }
+        }
+
+        @Test
+        @DisplayName("it's possible to void individual lines.")
+        void individual_lines_can_be_voided_without_the_order_being_voided() {
+            Order subject = new Order();
+            OrderLine line = subject.addItem(createBoomboxProduct());
+
+            line.markVoid();
+
+            assertTrue(line.isVoided());
+            assertFalse(subject.isVoided());
+        }
+
+        @Test
+        @DisplayName("voided individual line items have a zero cost.")
+        void voided_lines_have_a_cost_of_zero() {
+            Order subject = new Order();
+            OrderLine line = subject.addItem(createBoomboxProduct());
+
+            line.markVoid();
+
+            assertEquals(0, line.getCost());
+        }
+
+        @Test
+        void an_order_with_one_voided_line_is_not_voided_itself() {
+            Order subject = new Order();
+
+            OrderLine line = subject.addItem(createBoomboxProduct());
+            line.markVoid();
+
+            assertFalse(subject.isVoided());
+        }
+
+        @Test
+        @DisplayName("an order with a voided line can have new items added.")
+        void add_more_items_to_an_order_with_an_already_voided_item() {
+            Order subject = new Order();
+
+            OrderLine line = subject.addItem(createBoomboxProduct());
+
+            line.markVoid();
+            assertEquals(0, subject.getTotal());
+
+            OrderLine newItem = subject.addItem(createBoomboxProduct());
+
+            assertTrue(subject.getTotal() > 0);
+        }
+
     }
 }

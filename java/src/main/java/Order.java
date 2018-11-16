@@ -3,7 +3,10 @@ import java.util.List;
 
 public class Order {
 
+    static class CannotAddItemsToVoidedOrder extends RuntimeException { }
+
     private ArrayList<OrderLine> lines = new ArrayList<>();
+
     private boolean voided = false;
 
     public OrderLine addItem(Product product) {
@@ -11,7 +14,7 @@ public class Order {
         if (!product.isValid()) throw new Product.InvalidProductException();
         if (this.isVoided()) throw new CannotAddItemsToVoidedOrder();
 
-        OrderLine line = new OrderLine(product);
+        OrderLine line = new OrderLine(this, product);
         lines.add(line);
 
         return line;
@@ -37,8 +40,5 @@ public class Order {
 
     public boolean isVoided() {
         return voided;
-    }
-
-    public static class CannotAddItemsToVoidedOrder extends RuntimeException {
     }
 }
