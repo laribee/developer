@@ -3,7 +3,8 @@ import java.util.List;
 
 public class Order {
 
-    static class CannotAddItemsToVoidedOrder extends RuntimeException { }
+    static class CannotAddItemsToVoidedOrder extends RuntimeException {
+    }
 
     private ArrayList<OrderLine> lines = new ArrayList<>();
 
@@ -27,11 +28,11 @@ public class Order {
     public double getTotal() {
         if (isVoided()) return 0;
 
-        double total = 0.0;
-        for (OrderLine line : lines) {
-            total += line.getCost();
-        }
-        return total;
+        double subTotal = calculateSubTotal();
+
+
+
+        return subTotal;
     }
 
     public void markVoid() {
@@ -40,5 +41,13 @@ public class Order {
 
     public boolean isVoided() {
         return voided;
+    }
+
+    private double calculateSubTotal() {
+        double total = 0.0;
+        for (OrderLine line : lines) {
+            total += line.getCost();
+        }
+        return total;
     }
 }
