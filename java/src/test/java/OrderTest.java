@@ -209,7 +209,7 @@ class OrderTest extends ModelTestFixture {
             line.markVoid();
             assertEquals(0, subject.calculateTotal());
 
-            OrderLine newItem = subject.addItem(createBoomboxProduct());
+            subject.addItem(createBoomboxProduct());
 
             assertTrue(subject.calculateTotal() > 0);
         }
