@@ -45,8 +45,8 @@ junitPlatform {
         }
         // includeClassNamePattern '.*Test'
     }
-    // enableStandardTestTask true
-    // reportsDir file('build/test-results/junit-platform') // this is the default
+    enableStandardTestTask true
+    reportsDir file('build/test-results/junit-platform')
 }
 
 dependencies {
@@ -58,11 +58,11 @@ dependencies {
 
     testCompile("org.mockito:mockito-core:${mockitoVersion}")
     // If you also want to support JUnit 3 and JUnit 4 tests
-    testCompile("junit:junit:${junit4Version}")
-    testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
+    // testCompile("junit:junit:${junit4Version}")
+    // testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
 }
 
 task wrapper(type: Wrapper) {
     description = 'Generates gradlew[.bat] scripts'
-    gradleVersion = '3.0'
+    gradleVersion = '4.10.2'
 }

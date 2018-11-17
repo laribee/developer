@@ -99,3 +99,4 @@ fabric.properties
 .settings/
 target/
 
+!gradle/wrapper/gradle-wrapper.jar
