@@ -11,6 +11,7 @@ class BuyFourGetOneDiscountTest
     }
 
     @Test
+    @DisplayName("Buy four items of with the same SKU, get the fifth free.")
     void five_items_of_same_sku_get_one_for_free() {
 
         Order subject = new Order();
@@ -30,6 +31,7 @@ class BuyFourGetOneDiscountTest
     }
 
     @Test
+    @DisplayName("Voided items do not qualify.")
     void voided_line_items_do_not_contribute_to_discount()
     {
         ArrayList<Discount> theDiscounts = new ArrayList<>();
