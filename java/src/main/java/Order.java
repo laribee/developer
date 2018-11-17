@@ -39,7 +39,7 @@ public class Order {
             discountAmount += discount.calculate(lines);
         }
 
-        return subTotal - discountAmount;
+        return Math.max(subTotal - discountAmount, 0);
     }
 
     public void markVoid() {

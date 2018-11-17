@@ -242,6 +242,7 @@ class OrderTest {
         }
 
         @Test
+        @DisplayName("it is possible to apply multiple discounts.")
         void apply_multiple_discounts() {
             TestDiscount testDiscount1 = new TestDiscount(3.22);
             TestDiscount testDiscount2 = new TestDiscount(6.22);
@@ -259,6 +260,25 @@ class OrderTest {
 
             assertEquals(90.56, subject.calculateTotal(discounts));
         }
+
+        @Test
+        @DisplayName("it is impossible for discounts to create a negative order total.")
+        void discounts_will_not_result_in_a_negative_total() {
+            TestDiscount testDiscount1 = new TestDiscount(101);
+
+            Product boombox = createBoomboxProduct();
+            boombox.setCost(100);
+
+            Order subject = new Order();
+
+            subject.addItem(boombox);
+
+            ArrayList<Discount> discounts = new ArrayList<>();
+            discounts.add(testDiscount1);
+
+            assertEquals(0, subject.calculateTotal(discounts));
+        }
+
         class TestDiscount implements Discount {
 
             double amount;
