@@ -5,7 +5,7 @@
 
 ## Installation
 
-This project uses the [Gradle Build Tool](https://gradle.org/). Please []follow their installation instructions](https://gradle.org/install/). 
+This project uses the [Gradle Build Tool](https://gradle.org/). Please []follow their installation instructions](https://gradle.org/install/). If you want to use eclipse
 
 Mac/Linux (Bash): `./gradlew`
 
