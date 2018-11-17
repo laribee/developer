@@ -5,7 +5,7 @@
 
 ## Installation
 
-This project uses the [Gradle Build Tool](https://gradle.org/). There is a `pom.xml` file, so you can use [Appache Maven](https://maven.apache.org/), if you're more comfortable with that or there's a restriction in your corporate firewall. 
+This project uses the [Gradle Build Tool](https://gradle.org/). Please []follow their installation instructions](https://gradle.org/install/). 
 
 Mac/Linux (Bash): `./gradlew`
 
@@ -18,7 +18,6 @@ Either run them in your IDE or on the command line with:
 Mac/Linux (Bash): `./gradlew test`
 
 Windows: `gradlew.bat test`
-
 
 ## Resources
 
@@ -34,7 +33,6 @@ JUnit 5 is a popular xUnit test framework for Java projects.
 ### Mockito 
 
 Mockito is the test double (mocks, stubs, spies, etc.) library of record for Java projects.
-
 
 - [Core Documentation](http://static.javadoc.io/org.mockito/mockito-core/2.23.0/org/mockito/Mockito.html)
 - [Argument Matchers](http://static.javadoc.io/org.mockito/mockito-core/2.23.0/org/mockito/ArgumentMatchers.html)
