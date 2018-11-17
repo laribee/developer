@@ -39,7 +39,7 @@ public class Order {
             discountAmount += discount.calculate(lines);
         }
 
-        return Math.max(subTotal - discountAmount, 0);
+        return calculateNonZeroTotal(subTotal, discountAmount);
     }
 
     public void markVoid() {
@@ -48,6 +48,10 @@ public class Order {
 
     public boolean isVoided() {
         return voided;
+    }
+
+    private double calculateNonZeroTotal(double subTotal, double discountAmount) {
+        return Math.max(subTotal - discountAmount, 0);
     }
 
     private double calculateSubTotal() {
