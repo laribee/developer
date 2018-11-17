@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Discount: Buy Four, Get One")
-class BuyFourGetOneDiscountTest
+class BuyFourGetOneDiscountTest extends ModelTestFixture
 {
-    private Product createBoomboxProduct() {
-        return new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
-    }
 
     @Test
     @DisplayName("Buy four items of with the same SKU, get the fifth free.")

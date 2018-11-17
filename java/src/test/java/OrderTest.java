@@ -5,17 +5,13 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Order")
-class OrderTest {
-
-    private Product createBoomboxProduct() {
-        return new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
-    }
+class OrderTest extends ModelTestFixture {
 
     @Test
     @DisplayName("Have multiple line items.")
     void have_multiple_line_items() {
 
-        Product product1 = new Product("BOOMBOX", 99.99, "Pump up the jams.", Product.ProductType.Electronics);
+        Product product1 = createBoomboxProduct();
         Product product2 = new Product("JUICERO", 400.00, "Make juice ta yer house!", Product.ProductType.Appliance);
         Product product3 = new Product("PPTRTS-PS", 3.89, "Pumpkin Space Pop Tarts", Product.ProductType.Miscellaneous);
 
