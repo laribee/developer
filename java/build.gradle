@@ -36,7 +36,7 @@ junitPlatform {
     platformVersion '1.0.2'
     filters {
         engines {
-            // include 'junit-jupiter', 'junit-vintage'
+            include 'junit-jupiter', 'junit-vintage'
             // exclude 'custom-engine'
         }
         tags {
@@ -53,10 +53,11 @@ dependencies {
     // JUnit Jupiter API and TestEngine implementation
     testCompile("org.junit.jupiter:junit-jupiter-api:${junitJupiterVersion}")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:${junitJupiterVersion}")
-
     testCompile("org.junit.platform:junit-platform-runner:${junitPlatformVersion}")
 
+    // Mockito
     testCompile("org.mockito:mockito-core:${mockitoVersion}")
+
     // If you also want to support JUnit 3 and JUnit 4 tests
     // testCompile("junit:junit:${junit4Version}")
     // testRuntime("org.junit.vintage:junit-vintage-engine:${junitVintageVersion}")
