@@ -34,10 +34,10 @@ public class Order {
 
         double subTotal = calculateSubTotal();
 
-        double discountAmount = 0;
-        for (Discount discount : discounts) {
-            discountAmount += discount.calculate(lines);
-        }
+        double discountAmount = discounts
+                .stream()
+                .mapToDouble(discount -> discount.calculate(lines))
+                .sum();
 
         return calculateNonZeroTotal(subTotal, discountAmount);
     }
