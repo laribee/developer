@@ -275,7 +275,7 @@ class OrderTest extends ModelTestFixture {
             assertEquals(0, subject.calculateTotal(discounts));
         }
 
-        class TestDiscount implements Discount {
+        class TestDiscount extends Discount {
 
             double amount;
 

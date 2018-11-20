@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
-public class TenPercentElectronicsPromotion implements Discount {
+public class TenPercentElectronicsPromotion extends Discount {
+
     @Override
-    public double calculate(ArrayList<OrderLine> lines) {
-        if (filterByElectronics(lines).count() < 2) return 0;
+    protected double doCalculate(Stream<OrderLine> lines) {
+        Stream<OrderLine> nonVoidedElectronicItems = filterByElectronics(lines);
+
+        if (nonVoidedElectronicItems.count() < 2) return 0;
 
         double highestPrice = getHighestPriceElectronicsItem(lines);
 
@@ -16,12 +19,13 @@ public class TenPercentElectronicsPromotion implements Discount {
         return highestPrice * .1;
     }
 
-    private double getHighestPriceElectronicsItem(ArrayList<OrderLine> lines) {
+    private double getHighestPriceElectronicsItem(Stream<OrderLine> lines) {
         return filterByElectronics(lines).max(Comparator.comparing(OrderLine::getCost)).get().getCost();
     }
 
-    private Stream<OrderLine> filterByElectronics(ArrayList<OrderLine> lines) {
-        Predicate<OrderLine> filter = line -> line.getProductType() == Product.ProductType.Electronics;
-        return lines.stream().filter(filter).filter(orderLine -> !orderLine.isVoided());
+    private Stream<OrderLine> filterByElectronics(Stream<OrderLine> lines) {
+        Predicate<OrderLine> electronicsOnly = line -> line.getProductType() == Product.ProductType.Electronics;
+        return filterVoided(lines.filter(electronicsOnly));
     }
+
 }

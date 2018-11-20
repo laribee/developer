@@ -1,26 +1,25 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-public class BuyFourGetOneDiscount implements Discount {
+import java.util.stream.Stream;
+public class BuyFourGetOneDiscount extends Discount {
 
     @Override
-    public double calculate(ArrayList<OrderLine> lines) {
+    protected double doCalculate(Stream<OrderLine> lines) {
         double discount = 0;
 
         Map<String, Integer> skuMap = new HashMap<>();
         Map<String, Double> costMap = new HashMap<>();
 
-        for(OrderLine line : lines) {
+        lines.forEach((line) -> {
             String sku = line.getSku();
-
-            if (line.isVoided()) continue;
 
             if (!skuMap.containsKey(sku)) skuMap.put(sku, 0);
             if (!costMap.containsKey(sku)) costMap.put(sku, line.getCost());
 
             Integer currentCount = skuMap.get(sku);
             skuMap.replace(sku, currentCount + 1);
-        }
+        });
 
         for (String sku : skuMap.keySet()) {
             if (skuMap.get(sku) == 5) {
@@ -28,6 +27,7 @@ public class BuyFourGetOneDiscount implements Discount {
             }
         }
         return discount;
+
     }
 
 }
