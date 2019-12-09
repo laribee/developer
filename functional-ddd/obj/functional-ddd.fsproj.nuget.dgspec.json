@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/laribee/projects/developer/functional-ddd/functional-ddd.fsproj": {}
+  },
+  "projects": {
+    "/Users/laribee/projects/developer/functional-ddd/functional-ddd.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/laribee/projects/developer/functional-ddd/functional-ddd.fsproj",
+        "projectName": "functional-ddd",
+        "projectPath": "/Users/laribee/projects/developer/functional-ddd/functional-ddd.fsproj",
+        "packagesPath": "/Users/laribee/.nuget/packages/",
+        "outputPath": "/Users/laribee/projects/developer/functional-ddd/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/Users/laribee/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.1": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.1": {
+          "dependencies": {
+            "FSharp.Core": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[15.8.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.1.0, )",
+              "autoReferenced": true
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.3.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
