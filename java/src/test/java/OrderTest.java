@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderTest extends ModelTestFixture {
 
     @Test
-    @DisplayName("Have multiple line items.")
+    @DisplayName("Can have multiple line items.")
     void have_multiple_line_items() {
 
         Product product1 = createBoomboxProduct();
         Product product2 = new Product("JUICERO", 400.00, "Make juice ta yer house!", Product.ProductType.Appliance);
-        Product product3 = new Product("PPTRTS-PS", 3.89, "Pumpkin Space Pop Tarts", Product.ProductType.Miscellaneous);
+        Product product3 = new Product("PPTRTS-PS", 3.89, "Pumpkin Spice Pop Tarts", Product.ProductType.Miscellaneous);
 
         Order subject = new Order();
         assertEquals(0, subject.getLines().size());
